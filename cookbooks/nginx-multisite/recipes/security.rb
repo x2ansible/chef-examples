@@ -49,6 +49,7 @@ end
 
 secret_setting 'service_api_key' do
   scope 'nginx'
+  ignore_failure true
 end
 
 template '/etc/sysctl.d/99-security.conf' do
@@ -67,7 +68,7 @@ if node['security']['ssh']['disable_root']
     line 'PermitRootLogin no'
     match '^#\?PermitRootLogin'
     not_if "grep -q '^PermitRootLogin no' /etc/ssh/sshd_config"
-    notifies :restart, 'service[ssh]', :delayed
+    notifies :restart, 'service[sshd]', :delayed
   end
 end
 
@@ -76,7 +77,7 @@ if node['security']['ssh']['password_auth'] == false
     line 'PasswordAuthentication no'
     match '^#\?PasswordAuthentication'
     not_if "grep -q '^PasswordAuthentication no' /etc/ssh/sshd_config"
-    notifies :restart, 'service[ssh]', :delayed
+    notifies :restart, 'service[sshd]', :delayed
   end
 end
 
