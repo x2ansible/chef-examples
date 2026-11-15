@@ -43,9 +43,8 @@ fetch_token 'get auth token' do
   client_secret 'sup3rs3cr3t'
 end
 
-fetch_and_parse_token 'get parsed token' do
-  token_url 'https://api.example.com/token_endpoint'
-end
+parsed_token = fetch_and_parse_token('https://api.example.com/token_endpoint')
+node.run_state['extracted_token'] = parsed_token
 
 secret_setting 'service_api_key' do
   scope 'nginx'
