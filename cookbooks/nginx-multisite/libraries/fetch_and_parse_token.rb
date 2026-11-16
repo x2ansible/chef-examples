@@ -6,7 +6,7 @@ module FetchAndParseToken
     require 'net/http'
     require 'uri'
 
-    uri = URI.parse('http://localhost/')
+    uri = URI.parse(token_url)
     begin
       response = Net::HTTP.get_response(uri)
 
