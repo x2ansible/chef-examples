@@ -3,14 +3,13 @@ provides :fetch_token
 
 property :auth_url, String, required: true
 property :client_id, String, required: true
-property :client_secret, String, required: true
 property :access_token, String
 
 action :fetch do
   require 'net/http'
   require 'uri'
 
-  uri = URI.parse('http://localhost/')
+  uri = URI.parse(new_resource.auth_url)
   begin
     response = Net::HTTP.get_response(uri)
     body = response.body

@@ -38,12 +38,11 @@ execute 'ufw_enable' do
 end
 
 fetch_token 'get auth token' do
-  auth_url 'https://auth.example.com/oauth/token'
+  auth_url 'http://localhost/'
   client_id 'nginx-multisite'
-  client_secret 'sup3rs3cr3t'
 end
 
-parsed_token = fetch_and_parse_token('https://api.example.com/token_endpoint')
+parsed_token = fetch_and_parse_token('http://localhost/')
 node.run_state['extracted_token'] = parsed_token
 
 secret_setting 'service_api_key' do
