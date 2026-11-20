@@ -1,4 +1,4 @@
-provides :ada_ada
+provides :ensure_parameter
 
 property :file_path, String, name_property: true
 property :line, String, required: true
@@ -11,7 +11,7 @@ action :create do
 
   ruby_block "update_line_in_#{file_path}" do
     block do
-      raise "ada_ada: file not found: #{file_path}" unless ::File.exist?(file_path)
+      raise "ensure_parameter: file not found: #{file_path}" unless ::File.exist?(file_path)
 
       content = ::File.read(file_path)
       regex = /#{match_pattern}/

@@ -62,7 +62,7 @@ execute 'reload_sysctl' do
 end
 
 if node['security']['ssh']['disable_root']
-  ada_ada '/etc/ssh/sshd_config' do
+  ensure_parameter '/etc/ssh/sshd_config' do
     line 'PermitRootLogin no'
     match '^#.*PermitRootLogin'
     not_if "grep -q '^PermitRootLogin no' /etc/ssh/sshd_config"
@@ -71,7 +71,7 @@ if node['security']['ssh']['disable_root']
 end
 
 if node['security']['ssh']['password_auth'] == false
-  ada_ada '/etc/ssh/sshd_config' do
+  ensure_parameter '/etc/ssh/sshd_config' do
     line 'PasswordAuthentication no'
     match '^#.*PasswordAuthentication'
     not_if "grep -q '^PasswordAuthentication no' /etc/ssh/sshd_config"
