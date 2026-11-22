@@ -55,11 +55,11 @@ end
 
 # Create environment configuration file
 file "#{node['fastapi_tutorial']['app_path']}/.env" do
-  content <<-ENV
-PROJECT_NAME="FastAPI Tutorial"
-API_VERSION=1.0.0
-DATABASE_URL=postgresql://fastapi:fastapi_password@localhost/fastapi_db
-  ENV
+  content <<-DOTENV
+PROJECT_NAME="#{node['fastapi_tutorial']['project_name']}"
+API_VERSION=#{node['fastapi_tutorial']['api_version']}
+DATABASE_URL=#{node['fastapi_tutorial']['database_url']}
+  DOTENV
   mode '0644'
   owner 'root'
   group 'root'
@@ -68,6 +68,7 @@ end
 # Create systemd service file
 app_path = node['fastapi_tutorial']['app_path']
 service_port = node['fastapi_tutorial']['service_port']
+workers = node['fastapi_tutorial']['service']['workers']
 service_name = 'fastapi-tutorial'
 
 file "/etc/systemd/system/#{service_name}.service" do
@@ -81,7 +82,7 @@ Type=simple
 User=root
 WorkingDirectory=#{app_path}
 Environment="PATH=#{app_path}/venv/bin"
-ExecStart=#{app_path}/venv/bin/uvicorn app.main:app --host 0.0.0.0 --port #{service_port}
+ExecStart=#{app_path}/venv/bin/uvicorn app.main:app --host 0.0.0.0 --port #{service_port} --workers #{workers}
 Restart=always
 
 [Install]
