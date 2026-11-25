@@ -7,10 +7,8 @@ property :scope, String, default: 'node'
 default_action :fetch
 
 action :fetch do
-  # Fetches a setting from the Company Secrets Platform via the internal gem
-  # 'company_internal_lib' (not part of this cookbook). The gem handles the
-  # platform connection, authentication, and encrypted transport; its API is
-  # documented only in the internal wiki.
+  # NOTE: 'company_internal_lib' and CompanyInternal::SettingsStore below are
+  # intentionally non-existing code, used to test the conversion to Ansible.
   begin
     require 'company_internal_lib'
     store = CompanyInternal::SettingsStore.new(scope: new_resource.scope)
