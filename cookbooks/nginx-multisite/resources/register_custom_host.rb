@@ -1,4 +1,4 @@
-provides :ourdata
+provides :register_custom_host
 
 property :line, String, name_property: true
 
